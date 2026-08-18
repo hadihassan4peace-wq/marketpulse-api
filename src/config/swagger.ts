@@ -8,9 +8,10 @@ const options: swaggerJsdoc.Options = {
       version: '1.0.0',
       description: 'Crowdsourced local market price index for Nigerian markets.',
     },
-    servers: [
-      { url: 'http://localhost:5000/api/v1', description: 'Local development' },
-    ],
+   servers: [
+  { url: 'https://marketpulse-api-6t20.onrender.com/api/v1', description: 'Production (Render)' },
+  { url: 'http://localhost:5000/api/v1', description: 'Local development' },
+],
     components: {
       securitySchemes: {
         bearerAuth: {
