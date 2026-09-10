@@ -1,13 +1,10 @@
-import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { Response, Request } from 'express';
+import prisma from '../config/prisma';
 import { AuthRequest } from '../middleware/authMiddleware';
-
-const prisma = new PrismaClient();
 
 export async function createPriceReport(req: AuthRequest, res: Response) {
   try {
     const { marketId, commodityId, price } = req.body || {};
-  
 
     if (!marketId || !commodityId || price === undefined) {
       return res.status(400).json({ status: 'error', message: 'marketId, commodityId, and price are required' });
@@ -26,7 +23,6 @@ export async function createPriceReport(req: AuthRequest, res: Response) {
         commodity: { select: { name: true, unit: true } },
       },
     });
-    
 
     res.status(201).json({ status: 'success', data: priceReport });
   } catch (error: any) {
@@ -37,6 +33,7 @@ export async function createPriceReport(req: AuthRequest, res: Response) {
     res.status(500).json({ status: 'error', message: 'Failed to create price report' });
   }
 }
+
 export async function getPriceReports(req: Request, res: Response) {
   try {
     const { marketId, commodityId } = req.query;
@@ -61,7 +58,9 @@ export async function getPriceReports(req: Request, res: Response) {
     console.error(error);
     res.status(500).json({ status: 'error', message: 'Failed to fetch price reports' });
   }
-}export async function getPriceStats(req: Request, res: Response) {
+}
+
+export async function getPriceStats(req: Request, res: Response) {
   try {
     const { marketId } = req.query;
 
